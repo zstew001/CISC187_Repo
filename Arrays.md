@@ -1,3 +1,12 @@
+# Video of me explaining the content of this assignment:
+## [video1499948069.zip](https://github.com/user-attachments/files/31623092/video1499948069.zip)
+
+
+
+
+
+
+
 # Question 1: 
 ## Explain how to create an array of 100 elements. You can choose any data type of your choice.
 # Question 2: 
