@@ -41,8 +41,7 @@ int main() {
 ### f. Deletion at the end of the array: Takes 1 step. Either you can overwrite the value of the last array element, or decrease the size of the array by 1 element. 
 
 # Question 4:
-## Normally the search operation in an array looks for the first instance of a given value. But sometimes we may want to look for every instance of a given value. 
-## For example, say we want to count how many times the value “apple” is found inside an array. How many steps would it take to find all the “apples”? Give your answer in terms of N.
+## Normally the search operation in an array looks for the first instance of a given value. But sometimes we may want to look for every instance of a given value. For example, say we want to count how many times the value “apple” is found inside an array. How many steps would it take to find all the “apples”? Give your answer in terms of N.
 ### For an array of size N, we'd have to perform N operations to find all occurrences of "apple", as every array element has to be checked to see if it matches the value of "apple".
 
 # Question 5: 
