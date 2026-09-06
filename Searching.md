@@ -32,12 +32,10 @@ using namespace std;
 bool linearSearch(vector<int> dataSet, int target, int& comparisons){
     comparisons = 0;
 
-    for (int i = 0; i < dataSet.size(); i++)
-    {
+    for (int i = 0; i < dataSet.size(); i++){
         comparisons++;
 
-        if (dataSet[i] == target)
-        {
+        if (dataSet[i] == target){
             return true;
         }
     }
@@ -72,8 +70,7 @@ bool binarySearch(vector<int> dataSet, int target, int& comparisons){
 
 }
 
-int main()
-{
+int main(){
     vector<int> dataSet;
 
     
