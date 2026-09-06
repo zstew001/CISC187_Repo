@@ -13,15 +13,15 @@
 # Question 4: 
 ## Write a C++ program that implements both linear search and binary search using a dataset containing 100,000 elements.
 ## Your program should:
-###   Search for the same target value using both algorithms.
-###   Record the number of element-to-target comparisons performed by linear search.
-###   Record the number of element-to-target comparisons performed by binary search.
-###   Report whether the target was found.
-###   Display the number of comparisons performed by each algorithm.
-###   Test your program using different target values, including:
-###      A value near the beginning of the dataset.
-###      A value near the end of the dataset.
-###      A value that does not exist in the dataset.
+###   **Search for the same target value using both algorithms.**
+###   **Record the number of element-to-target comparisons performed by linear search.**
+###   **Record the number of element-to-target comparisons performed by binary search.**
+###   **Report whether the target was found.**
+###   ***Display the number of comparisons performed by each algorithm.***
+###   **Test your program using different target values, including:**
+###      **A value near the beginning of the dataset.**
+###      **A value near the end of the dataset.**
+###      **A value that does not exist in the dataset.**
 # Question 4 Code:
 ```C++
 #include <iostream>
