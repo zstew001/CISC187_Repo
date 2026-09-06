@@ -29,13 +29,13 @@
 
 using namespace std;
 // Function for Linear Search algorithm
-bool linearSearch(vector<int> dataSet, int target, int& comparisons){
+bool linearSearch(vector<int> dataSet, int target, int& comparisons) {
     comparisons = 0;
 
-    for (int i = 0; i < dataSet.size(); i++){
+    for (int i = 0; i < dataSet.size(); i++) {
         comparisons++;
 
-        if (dataSet[i] == target){
+        if (dataSet[i] == target) {
             return true;
         }
     }
@@ -44,24 +44,24 @@ bool linearSearch(vector<int> dataSet, int target, int& comparisons){
 
 }
 // Function for Binary Search algorithm
-bool binarySearch(vector<int> dataSet, int target, int& comparisons){
+bool binarySearch(vector<int> dataSet, int target, int& comparisons) {
     comparisons = 0;
 
     int low = 0;
     int high = dataSet.size() - 1;
 
-    while (low <= high){
+    while (low <= high) {
         int mid = (low + high) / 2;
 
         comparisons++;
 
-        if (dataSet[mid] == target){
+        if (dataSet[mid] == target) {
             return true;
         }
-        else if (dataSet[mid] < target){
+        else if (dataSet[mid] < target) {
             low = mid + 1;
         }
-        else{
+        else {
             high = mid - 1;
         }
     }
@@ -70,17 +70,17 @@ bool binarySearch(vector<int> dataSet, int target, int& comparisons){
 
 }
 
-int main(){
+int main() {
     vector<int> dataSet;
 
     
-    for (int i = 1; i <= 100000; i++){
+    for (int i = 1; i <= 100000; i++) {
         dataSet.push_back(i);
     }
 
     int targets[3] = { 8, 98000, 100001 }; // 3 target values: one near beginning of dataSet, end of dataSet and not contained within dataSet 
 
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++) {
         int target = targets[i];
         int linearComparisons;
         int binaryComparisons;
@@ -93,10 +93,10 @@ int main(){
 
         cout << "Linear search:" << endl;
 
-        if (foundLinear){
+        if (foundLinear) {
             cout << "Target found" << endl;
         }
-        else{
+        else {
             cout << "Target not found" << endl;
         }
 
@@ -107,10 +107,10 @@ int main(){
 
         cout << "Binary search:" << endl;
 
-        if (foundBinary){
+        if (foundBinary) {
             cout << "Target found" << endl;
         }
-        else{
+        else {
             cout << "Target not found" << endl;
         }
 
@@ -156,4 +156,70 @@ while count < n
 
 return unsuccessful
 ```
+## Complexity Analysis: ***Hopefully this pseudocode is in an acceptable format. I tried to write it in a way that matches the style/syntax of your pseudocode in the lecture slide.***
 
+### Best-case: O(1) - The target value could be found on the first randomly selected index. Very unlikely in a dataset containing 100,000 elements but this is the best case time-complexity.
+### Average-case: O(N/2) - Statistically, the average case will end up somewhere around 50,000 checks in a 100,000 element data set. However, this will vary pretty significantly each time a target value is searched for.
+### Worst-case: O(N) - The target value could be the last randomly selected index. This means that all 100,000 elements will be checked. Similarly, if the target value doesn't exist, the algorithm will check every index before returning unsuccessful.
+
+## Implementation: 
+```C++
+#include <vector>
+#include <random>
+#include <iostream>
+
+using namespace std;
+
+// Function for random search algorithm
+bool randomSearch(vector<int> dataSet, int target, int& comparisons) {
+    vector<bool> checked(dataSet.size(), false);
+    int count = 0;
+    comparisons = 0;
+
+    random_device random; // I hope this is right - I had to look it up. I never used this in CISC 192 but you didn't include <cstdlib> in your list of headers.
+    mt19937 gen(random());
+    uniform_int_distribution<> dis(0, dataSet.size() - 1); 
+
+    while (count < dataSet.size()) {
+        int i = dis(gen);
+
+        if (checked[i] == false) {
+            checked[i] = true;
+            count++;
+
+            comparisons++;
+
+            if (dataSet[i] == target) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    vector<int> dataSet;
+
+    for (int i = 1; i <= 100000; i++) {
+        dataSet.push_back(i);
+    }
+
+    int target = 100;
+    int randomComparisons;
+
+    bool found = randomSearch(dataSet, target, randomComparisons);
+
+    if (found) {
+        cout << "Target found" << endl;
+    }
+    else {
+        cout << "Target not found" << endl;
+    }
+
+    cout << "Number of comparisons: "
+        << randomComparisons << endl;
+
+    return 0;
+}
+```
