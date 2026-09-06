@@ -129,3 +129,16 @@ int main()
 
 }
 ```
+# Question 4 Analysis:
+## 1. Linear search has a worst-case time complexity of O(N) because each element is checked once at a time. For example, if an element isn't in the data set, linear search must check each element one-by-one until reaching the end of the data set. The size of the remaining search space decreases by one after each check. Therefore, if the element is the last element in the data set to be checked or isn't contained in the data set, a 100,000 element data set would need to perform 100,000 checks to determine if the target value is present. 
+
+## 2. Binary search has a worst-case time complexity of O(Log N) because each comparison cuts the portion of the data set that needs to be searched in half. Binary search begins by checking the middle element and then determining if the target value is greater than, equal to, or less than the middle element. If the target element is smaller than the middle element, the upper half of the data set is eliminated and vice-versa. Therefore, mathematically, binary search only needs to perform log₂N comparisons. However, it's important to note that binary search only works on a sorted data set.
+
+## 3. Binary search requires a sorted data set because otherwise, it will have no way to ensure that the greater than, equal to, or less than comparison can be used to determine which half should be eliminated. For example, if the data set isn't sorted, binary search will miss potential target value matches each time it eliminates a portion of the data set to be checked. Linear search, on the other hand, is much simpler and checks each value one-by-one. This means that while it can be less efficient in a sorted data set, it guarantees that each value will be checked and the target value will be found if it exists. 
+
+# Question 5: Randomized Search
+## Design a randomized search algorithm that searches for a given key by randomly selecting indices without repetition.
+### Use a dataset containing 100,000 distinct elements stored in a C++ <vector>.
+### Each element may be eliminated at most once during a single search.
+
+## Pseudocode:
