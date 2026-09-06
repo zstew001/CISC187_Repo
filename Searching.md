@@ -88,11 +88,9 @@ int main()
         int linearComparisons;
         int binaryComparisons;
 
-        bool foundLinear = linearSearch(
-            dataSet, target, linearComparisons);
+        bool foundLinear = linearSearch(dataSet, target, linearComparisons);
 
-        bool foundBinary = binarySearch(
-            dataSet, target, binaryComparisons);
+        bool foundBinary = binarySearch(dataSet, target, binaryComparisons);
 
         cout << "Target value: " << target << endl;
 
@@ -142,3 +140,23 @@ int main()
 ### Each element may be eliminated at most once during a single search.
 
 ## Pseudocode:
+```C++
+function random_search(A, n, T)
+
+checked[0 to n - 1] := false
+
+count := 0
+
+while count < n
+    i := random integer from 0 to n - 1
+
+    if checked[i] = false
+        checked[i] := true
+        count := count + 1
+
+        if A[i] = T
+            return i
+
+return unsuccessful
+```
+
