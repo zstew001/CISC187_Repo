@@ -17,7 +17,7 @@
 ###   **Record the number of element-to-target comparisons performed by linear search.**
 ###   **Record the number of element-to-target comparisons performed by binary search.**
 ###   **Report whether the target was found.**
-###   ***Display the number of comparisons performed by each algorithm.***
+###   **Display the number of comparisons performed by each algorithm.**
 ###   **Test your program using different target values, including:**
 ###      **A value near the beginning of the dataset.**
 ###      **A value near the end of the dataset.**
