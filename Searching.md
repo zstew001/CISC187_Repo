@@ -143,6 +143,7 @@ function random_search(A, n, T)
 checked[0 to n - 1] := false
 
 count := 0
+comparisons := 0
 
 while count < n
     i := random integer from 0 to n - 1
@@ -150,6 +151,7 @@ while count < n
     if checked[i] = false
         checked[i] := true
         count := count + 1
+        comparisons := comparisons + 1
 
         if A[i] = T
             return i
