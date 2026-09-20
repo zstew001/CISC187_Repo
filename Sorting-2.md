@@ -10,13 +10,38 @@
 
 # Question 2: Changing the Starting Position of Insertion Sort
 ### Part A: Start at i = 1.
+
 ## A = [5, 4, 3, 2, 1]
 ### key = 4
-### A[0] >=< key? Comparisons++
+### A[0] >=< key?, Comparisons++
 ### 5 > 4 (True), Shifts++
-## A = [4, 5, 3, 2, 1]: **Comparisons: 1, Shifts: 1.**
+
+## A = [4, 5, 3, 2, 1]: **Total - Comparisons: 1, Shifts: 1**
 ### key = 3
-### A[1] >=< key? Comparisons++
+### A[1] >=< key?, Comparisons++
 ### 5 > 3 (True), Shifts++
-### A[0] >=< key? Comparisons++
+### A[0] >=< key?, Comparisons++
 ### 4 > 3 (True), Shifts++
+
+## A = [3, 4, 5, 2, 1]: **Total - Comparisons: 3, Shifts: 3**
+### key = 2
+### A[2] >=< key?, Comparisons++
+### 5 > 2 (True), Shifts++
+### A[1] >=< key?, Comparisons++
+### 4 > 2 (True), Shifts++
+### A[0] >=< key?, Comparisons++
+### 3 > 2 (True), Shifts++
+
+## A = [2, 3, 4, 5, 1]: **Total - Comparisons: 6, Shifts: 6**
+### key = 1
+### A[3] >=< key?, Comparisons++
+### 5 > 1 (True), Shifts++
+### A[2] >=< key?, Comparisons++
+### 4 > 1 (True), Shifts++
+### A[1] >=< key?, Comparisons++
+### 3 > 1 (True), Shifts++
+### A[0] >=< key?, Comparisons++
+### 2 > 1 (True), Shifts++
+
+## A = [1, 2, 3, 4, 5]: **Total - Comparisons: 10, Shifts: 10**
+## Total Counted Operations: 20
