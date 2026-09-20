@@ -9,7 +9,7 @@
 [insertionSortAnalysis_20260920_0001.pdf](https://github.com/user-attachments/files/32445336/insertionSortAnalysis_20260920_0001.pdf)
 
 # Question 2: Changing the Starting Position of Insertion Sort
-### Part A: Start at i = 1.
+# Part A: Start at i = 1.
 
 ## A = [5, 4, 3, 2, 1]
 ### key = 4
@@ -45,3 +45,60 @@
 
 ## A = [1, 2, 3, 4, 5]: **Total - Comparisons: 10, Shifts: 10**
 ## Total Counted Operations: 20
+
+# Part B: Start at i = 2.
+
+## A = [5, 4, 3, 2, 1]
+### key = 3
+### A[1] >=< key?, Comparisons++
+### 4 > 3 (True), Shifts++
+### A[0] >=< key?, Comparisons++
+### 5 > 3 (True), Shifts++
+
+## A = [3, 4, 5, 2, 1]: **Total - Comparisons: 2, Shifts: 2**
+### key = 2
+### A[2] >=< key?, Comparisons++
+### 5 > 2 (True), Shifts++
+### A[1] >=< key?, Comparisons++
+### 4 > 2 (True), Shifts++
+### A[0] >=< key?, Comparisons++
+### 3 > 2 (True), Shifts++
+
+## A = [2, 3, 4, 5, 1]: **Total - Comparisons: 5, Shifts: 5**
+### key = 1
+### A[3] >=< key?, Comparisons++
+### 5 > 1 (True), Shifts++
+### A[2] >=< key?, Comparisons++
+### 4 > 1 (True), Shifts++
+### A[1] >=< key?, Comparisons++
+### 3 > 1 (True), Shifts++
+### A[0] >=< key?, Comparisons++
+### 2 > 1 (True), Shifts++
+
+## A = [1, 2, 3, 4, 5]: **Total - Comparisons: 9, Shifts: 9**
+## Total Counted Operations: 18
+
+# Part C: Start at i = 3.
+
+## A = [5, 4, 3, 2, 1]
+### key = 2
+### A[2] >=< key?, Comparisons++
+### 3 > 2 (True), Shifts++
+### A[1] >=< key?, Comparisons++
+### 4 > 2 (True), Shifts++
+### A[0] >=< key?, Comparisons++
+### 5 > 2 (True), Shifts++
+
+## A = [2, 4, 3, 5, 1]: **Total - Comparisons: 3, Shifts: 3**
+### key = 1
+### A[3] >=< key?, Comparisons++
+### 5 > 1 (True), Shifts++
+### A[2] >=< key?, Comparisons++
+### 3 > 1 (True), Shifts++
+### A[1] >=< key?, Comparisons++
+### 4 > 1 (True), Shifts++
+### A[0] >=< key?, Comparisons++
+### 2 > 1 (True), Shifts++
+
+## A = [1, 2, 3, 4, 5]: **Total - Comparisons: 7, Shifts: 7**
+## Total Counted Operations: 14
