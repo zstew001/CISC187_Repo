@@ -122,3 +122,6 @@ int main() {
     return 0;
 }
 ```
+# Explanation: 
+## 1. The program determines how ordered the array is before sorting. This is measured by checking adjacent elements against each other.
+## The function: countAdjacentDisorder compares ```C++ currentIndex``` and ```C++ currentIndex + 1``` to determine how many pairs are out of order. When a pair is detected, ```C++ disorderCount``` increments.
