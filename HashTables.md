@@ -312,4 +312,164 @@ int main() {
  ### A displaced key may require multiple table accesses because collisions caused the key to be stored in a position other than its home position. The search follows the linear probing sequence and check each position until the key is found. This is still considered O(1) because only a small number of positions are checked in the average case, regardless of how large the table is. In this sense, the search scales at a constant rate rather than a linear rate as N becomes infinitely large. 
 
  # Part 7: Deletion and Tombstones
+```C++
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+enum SlotState {
+    EMPTY,
+    OCCUPIED,
+    DELETED
+};
+
+struct Record {
+    int key;
+    string value;
+    SlotState state;
+};
+
+int hashFunction(int key, int tableSize) {
+    int digitSum = 0;
+
+    while (key > 0) {
+        digitSum += key % 10;
+        key /= 10;
+    }
+
+    return digitSum % tableSize;
+}
+
+bool insertRecord(vector<Record>& hashTable, int key, string value) {
+    int tableSize = hashTable.size();
+    int originalIndex = hashFunction(key, tableSize);
+    int deletedIndex = -1;
+
+    for (int i = 0; i < tableSize; i++) {
+        int index = (originalIndex + i) % tableSize;
+
+
+        if (hashTable[index].state == OCCUPIED && hashTable[index].key == key) { // Updates value stored at index if key already exists
+            hashTable[index].value = value;
+            return true;
+        }
+
+
+        if (hashTable[index].state == DELETED && deletedIndex == -1) { // Saves the first deleted slot found
+            deletedIndex = index;
+        }
+
+
+        if (hashTable[index].state == EMPTY) { // Inserts record into empty slot if found
+            if (deletedIndex != -1) {
+                index = deletedIndex;
+            }
+
+            hashTable[index].key = key;
+            hashTable[index].value = value;
+            hashTable[index].state = OCCUPIED;
+            return true;
+        }
+    }
+
+
+    if (deletedIndex != -1) { // Inserts record into the first deleted slot found
+        hashTable[deletedIndex].key = key;
+        hashTable[deletedIndex].value = value;
+        hashTable[deletedIndex].state = OCCUPIED;
+        return true;
+    }
+
+
+    return false; // If every slot was checked and the table is full
+}
+
+void displayHashTable(const vector<Record>& hashTable) {
+    int tableSize = hashTable.size();
+
+    for (int i = 0; i < tableSize; i++) {
+        if (hashTable[i].state == OCCUPIED) { // Checks if the current slot contains a record
+            int homePosition = hashFunction(hashTable[i].key, tableSize); // Finds original position of the key
+
+            cout << "Key: " << hashTable[i].key << endl;
+            cout << "Value: " << hashTable[i].value << endl;
+            cout << "Home position: " << homePosition << endl;
+            cout << "Actual position: " << i << endl;
+            cout << endl;
+        }
+    }
+}
+
+bool searchRecord(const vector<Record>& hashTable, int key, int& positionsExamined) {
+    int tableSize = hashTable.size();
+    int originalIndex = hashFunction(key, tableSize);
+    positionsExamined = 0;
+
+    for (int i = 0; i < tableSize; i++) {
+        int index = (originalIndex + i) % tableSize;
+        positionsExamined++; // Counts each position checked
+
+        if (hashTable[index].state == OCCUPIED && hashTable[index].key == key) { // Returns true if key is found
+            return true;
+        }
+
+        if (hashTable[index].state == EMPTY) { // Stops searching if an empty slot is found
+            return false;
+        }
+    }
+
+    return false; // If key isn't found after checking every slot
+}
+
+bool removeRecord(vector<Record>& hashTable, int key) {
+    int tableSize = hashTable.size();
+    int originalIndex = hashFunction(key, tableSize);
+
+    for (int i = 0; i < tableSize; i++) {
+        int index = (originalIndex + i) % tableSize;
+
+        if (hashTable[index].state == OCCUPIED && hashTable[index].key == key) { // Marks record as deleted if key is found
+            hashTable[index].state = DELETED;
+            return true;
+        }
+
+        if (hashTable[index].state == EMPTY) { // Stops searching if an empty slot is found
+            return false;
+        }
+    }
+
+    return false; // If key isn't found after checking every slot
+}
+
+int main() {
+    const int tableSize = 11;
+
+    Record emptyRecord = { -1, "", EMPTY };
+    vector<Record> hashTable(tableSize, emptyRecord);
+
+    insertRecord(hashTable, 100, "First");
+    insertRecord(hashTable, 10, "Second");
+    insertRecord(hashTable, 1000, "Third");
+
+    cout << "Table before:" << endl;
+    displayHashTable(hashTable);
+
+    removeRecord(hashTable, 100);
+
+    cout << "Table after:" << endl;
+    displayHashTable(hashTable);
+
+    int positionsExamined;
+    bool found = searchRecord(hashTable, 1000, positionsExamined);
+
+    cout << "Searching for key 1000:" << endl;
+    cout << "Found: " << (found ? "Yes" : "No") << endl;
+    cout << "Positions examined: " << positionsExamined << endl;
+
+    return 0;
+}
+```
+## Analysis:
+### If the deleted position were marked as ```Empty``` it could produce an incorrect result because the search stops when it finds an empty position. For example, if the deleted key was the first collision, the search would stop before it checked the keys stored after it. Using ```Deleted``` signals for the search algorithm to continue beyond the empty position. 
 
