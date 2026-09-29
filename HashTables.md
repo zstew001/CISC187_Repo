@@ -135,3 +135,181 @@ int main() {
 ### My implementation avoids an infinite loop by limiting the for loop to the size of the hash table. The table only has 11 slots, so the loop can only check up to 11 positions. If an empty slot is found, the index value is inserted and the function returns true. If the key exists already, the value is updated and the function also returns true. If all 11 slots are checked and the table is full, the function returns false, ending the loop. 
 
 # Part 5: Home Position and Actual Position
+```C++
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct Record {
+    int key;
+    string value;
+};
+
+int hashFunction(int key, int tableSize) {
+    int digitSum = 0;
+
+    while (key > 0) {
+        digitSum += key % 10;
+        key /= 10;
+    }
+
+    return digitSum % tableSize;
+}
+
+bool insertRecord(vector<Record>& hashTable, int key, string value) {
+    int tableSize = hashTable.size();
+    int originalIndex = hashFunction(key, tableSize);
+
+    for (int i = 0; i < tableSize; i++) {
+        int index = (originalIndex + i) % tableSize;
+
+        
+        if (hashTable[index].key == key) { // Updates value stored at index if key already exists
+            hashTable[index].value = value;
+            return true;
+        }
+
+        
+        if (hashTable[index].key == -1) { // Inserts index into an empty slot if found
+            hashTable[index].key = key;
+            hashTable[index].value = value;
+            return true;
+        }
+    }
+
+    
+    return false; // If every slot was checked and the table is full
+}
+
+void displayHashTable(const vector<Record>& hashTable){
+    int tableSize = hashTable.size();
+
+    for(int i = 0; i < tableSize; i++){
+        if(hashTable[i].key != -1){ // Checks if the current slot contains a record
+            int homePosition = hashFunction(hashTable[i].key, tableSize); // Finds original position of the key
+
+            cout << "Key: " << hashTable[i].key << endl;
+            cout << "Value: " << hashTable[i].value << endl;
+            cout << "Home position: " << homePosition << endl;
+            cout << "Actual position: " << i << endl;
+            cout << endl;
+        }
+    }
+}
+
+int main() {
+    const int tableSize = 11;
+
+    Record emptyRecord = { -1, "" }; // Initializes every empty slot with key == -1
+    vector<Record> hashTable(tableSize, emptyRecord);
+
+
+    return 0;
+}
+```
+## Analysis:
+### 1. A key may not be stored at the home position if another key is stored there, resulting in a collision. 
+### 2. Linear probing determines the actual position by checking the next position in the hash table until an empty slot is found. This empty slot becomes the key's position.
+### 3. A large distance between the home position and actual position makes operations slower because the function will often need to check many positions before finding the key or an empty slot. 
+
+# Part 6: Searching with Linear Probing
+```C++
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct Record {
+    int key;
+    string value;
+};
+
+int hashFunction(int key, int tableSize) {
+    int digitSum = 0;
+
+    while (key > 0) {
+        digitSum += key % 10;
+        key /= 10;
+    }
+
+    return digitSum % tableSize;
+}
+
+bool insertRecord(vector<Record>& hashTable, int key, string value) {
+    int tableSize = hashTable.size();
+    int originalIndex = hashFunction(key, tableSize);
+
+    for (int i = 0; i < tableSize; i++) {
+        int index = (originalIndex + i) % tableSize;
+
+
+        if (hashTable[index].key == key) { // Updates value stored at index if key already exists
+            hashTable[index].value = value;
+            return true;
+        }
+
+
+        if (hashTable[index].key == -1) { // Inserts index into an empty slot if found
+            hashTable[index].key = key;
+            hashTable[index].value = value;
+            return true;
+        }
+    }
+
+
+    return false; // If every slot was checked and the table is full
+}
+
+void displayHashTable(const vector<Record>& hashTable) {
+    int tableSize = hashTable.size();
+
+    for (int i = 0; i < tableSize; i++) {
+        if (hashTable[i].key != -1) { // Checks if the current slot contains a record
+            int homePosition = hashFunction(hashTable[i].key, tableSize); // Finds original position of the key
+
+            cout << "Key: " << hashTable[i].key << endl;
+            cout << "Value: " << hashTable[i].value << endl;
+            cout << "Home position: " << homePosition << endl;
+            cout << "Actual position: " << i << endl;
+            cout << endl;
+        }
+    }
+}
+
+bool searchRecord(const vector<Record>& hashTable, int key, int& positionsExamined) {
+    int tableSize = hashTable.size();
+    int originalIndex = hashFunction(key, tableSize);
+    positionsExamined = 0;
+
+    for (int i = 0; i < tableSize; i++) {
+        int index = (originalIndex + i) % tableSize;
+        positionsExamined++; // Counts each position checked
+
+        if (hashTable[index].key == key) { // Returns true if key is found
+            return true;
+        }
+
+        if (hashTable[index].key == -1) { // Stops searching if empty slot is found
+            return false;
+        }
+    }
+
+    return false; // If key isn't found after checking every slot
+}
+
+int main() {
+    const int tableSize = 11;
+
+    Record emptyRecord = { -1, "" }; // Initializes every empty slot with key == -1
+    vector<Record> hashTable(tableSize, emptyRecord);
+
+
+    return 0;
+}
+```
+ ## Analysis:
+ ### A displaced key may require multiple table accesses because collisions caused the key to be stored in a position other than its home position. The search follows the linear probing sequence and check each position until the key is found. This is still considered O(1) because only a small number of positions are checked in the average case, regardless of how large the table is. In this sense, the search scales at a constant rate rather than a linear rate as N becomes infinitely large. 
+
+ # Part 7: Deletion and Tombstones
+
