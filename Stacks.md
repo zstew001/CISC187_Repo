@@ -141,6 +141,95 @@ int main() {
     return 0;
 }
 ```
+# Part 3 Analysis:
+### 1. Why should topIndex initially be -1 rather than 0?
+### - The index starts at 0. If topIndex is 0, the stack contains 1 element, so -1 represents an empty stack.
+### 2. Why is the stack size topIndex + 1?
+### - The first element is stored at index 0. For example, topIndex = 0 contains 1 element. So, in order to accurately represent the stack size, we have to take into account that the number of elements is + 1 compared to the index of the top element. 
+### 3. What value of topIndex indicates that the stack is full?
+### - topIndex == CAPACITY - 1; and CAPACITY = 10, so when topIndex = 9, the stack is full.
+
+# Part 4 Analysis:
+### 1. Explain why writing beyond: ```data[CAPACITY - 1]``` would be incorrect.
+### - CAPACITY = 10, so the valid indexes are 0 - 9. If you write beyond the array bounds, you can overwrite other memory. 
+
+# Part 5 Analysis:
+### 1. Explain why accessing ```data[topIndex]``` when ```topIndex = -1``` is invalid.
+### - When topIndex = -1, the stack is empty. If the stack is empty, there is no valid element to access.
+
+# Part 6 Analysis:
+### Explain the difference between: ```top()``` and ```pop()```.
+### - top() returns the top element in the stack without removing it (inspects). pop() returns then removes the top element. 
+
+# Part 8: Complexity Analysis
+### push() is O(1) time complexity. It only changes topIndex and stores a new value. The number of elements in the stack doesn't change the amount of work.
+### pop() is O(1) time complexity. It directly checks topIndex to find and remove the top value. As a result, it doesn't interact with any other elements in the stack and doesn't change the amount of work.
+### top() is O(1) time complexity. It inspects topIndex to find the element at the top of the stack. This also isn't affected by other elements in the stack and doesn't change the amount of work.
+### empty() is O(1) time complexity. It simply checks if topIndex == -1. This doesn't interact with other elements in the stack and as a result, doesn't change the amount of work.
+### full() is O(1) time complexity. It checks if topIndex == CAPACITY - 1. So, no other elements are examined and no additonal work is required regardless of # of elements in the stack.
+### size() is O(1) time complexity. This returns topIndex + 1, so it directly returns the size of the stack without needing to count elements. Therefore, no additional work is required regardless of the stack size.
+
+### One Million Elements: Even in a stack containing 1,000,000 elements, pop() could be used to remove the top element without examining any of the other 999,999 elements. This is why topIndex is so important. Without topIndex, pop() wouldn't be able to immediately locate and remove the top element. You'd have to use a search algorithm to find the top element. As we've seen, search algorithms aren't O(1) so you'd lose a lot of efficiency. 
+
+# Part 9: Stack Correctness
+### 1. Following the four push() operations, four consecutive pop() operations would return: 20, 15, 10, 5.
+### 2. The general relationship is ```push(x1), push(x2), ..., push(xN)``` then four consecutive pop()'s would return ```xN, xN-1, ..., x2, x1``` (Last-In, First-Out). This property can be used to test whether your stack implementation is correct because it shows that push() is correctly placing values at the top of the stack and pop() is correctly returning then removing them. If the order doesn't follow this general pattern, it's fairly likely a mistake was made with the programmer's stack implementation. 
+
+# Part 11: Implement the Balanced-Delimiter Algorithm
+```C++
+#include <iostream>
+#include <stack>
+#include <string>
+
+using namespace std;
+
+bool balanced(const string& expression) {
+    stack<char> delimiters;
+
+    for (char character : expression) {
+        if (character == '(' || character == '[' || character == '{') {
+            delimiters.push(character);
+        }
+        else if (character == ')' || character == ']' || character == '}') {
+            if (delimiters.empty()) {
+                return false;
+            }
+
+            char opening = delimiters.top();
+            delimiters.pop();
+
+            if ((character == ')' && opening != '(') ||
+                (character == ']' && opening != '[') ||
+                (character == '}' && opening != '{')) {
+                return false;
+            }
+        }
+    }
+
+    return delimiters.empty();
+}
+
+int main() {
+    string expressions[] = {
+        "{(a+b)*[c-d]}",
+        "{(a+b]*c}",
+        "((a+b))",
+        "((a+b)",
+        "[a+b]",
+        "{[()]}",
+        "{[(])}"
+    };
+
+    for (string expression : expressions) {
+        cout << "Expression: " << expression << endl;
+        cout << "Balanced: " << (balanced(expression) ? "true" : "false") << endl;
+        cout << endl;
+    }
+
+    return 0;
+}
+```
+
 
 
 
