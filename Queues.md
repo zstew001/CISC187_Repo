@@ -170,3 +170,26 @@ int main() {
     return 0;
 }
 ```
+# Part 4 Analysis:
+### 1. Why does `count == 0` represent an empty queue?
+### - `count` tracks how many elements are in the queue. If count is 0, there are no elements, so the queue is empty.
+### 2. Why does `count == CAPACITY` represent a full queue?
+### - The queue can hold a maximum of CAPACITY elements. When count reaches CAPACITY, all available positions are being used.
+### 3. Why can `frontIndex == rearIndex` represent either an empty or full circular queue in this design?
+### - Since both indexes wrap around the array, they can eventually reach the same position. When the queue is empty, both start at 0. They can also become equal after the queue has wrapped around while being full.
+### 4. How does maintaining `count` remove this ambiguity?
+### - `count` tells us how many elements are actually stored. If the indexes are equal and count is 0, the queue is empty. If count is CAPACITY, the queue is full.
+
+# Part 5 Analysis:
+### 1. Explain why `++rearIndex;` by itself is not sufficient for a circular queue.
+### - `rearIndex` can only contain indexes from 0 to CAPACITY - 1. If we only use `++rearIndex`, it will eventually become CAPACITY and go outside the array. `(rearIndex + 1) % CAPACITY` wraps the index back to 0 after the last position.
+
+# Part 6 Analysis:
+### 1. Explain why `dequeue()` =should advance `frontIndex` instead of shifting all remaining elements.
+### - Advancing `frontIndex` moves directly to the next element without moving the others. This makes `dequeue()` O(1). Shifting the remaining elements would make it O(N).
+
+# Part 7 Analysis:
+### Explain the difference between: `front()` and `dequeue()`.
+### - `front()` returns the oldest element without removing it. `dequeue()` returns the oldest element and removes it from the queue. Therefore, `front()` does not change the queue, while `dequeue()` does.
+
+# Part 8: Demonstrate Circular Wraparound
