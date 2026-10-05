@@ -229,6 +229,32 @@ int main() {
     return 0;
 }
 ```
+# Part 12: Analyze Delimiter Matching
+### 1. Explain how many times each character is examined.
+### - Each character is only examined once as the algorithm moves from left to right.
+### 2. Explain why each delimiter is pushed or popped at most once.
+### - An opening delimiter is pushed once when the algorithm encounters it. It is also only popped once when the matching closing delimiter is found.
+### 3. Explain the time complexity of the algorithm.
+### - As push(), pop(), and top() are all O(1) and every character must be examined once, which is O(N), their combined time complexity is O(N).
+### 4. Explain the worst-case space complexity.
+### - I think the worst-case space complexity would be O(N). For example, if there was N opening delimiters and no closing delimiters, all of the opening delimiters would remain in the stack, requiring N spaces. 
+
+# Part 13: Stack Applications
+## Scenario A: Undo
+### This scenario follows LIFO behavior. In this case a stack would be appropriate because the most recent operation needs to be undone first. I.E. Google docs follows this logic with their undo function. 
+
+## Scenario B: Function Calls
+### This scenario also follows LIFO behavior. A stack is appropriate here because the most recently called function would need to be removed from the stack then the new top of the stack could be called to return to the previous function.
+
+## Scenario C: Browser Back Navigation
+### This follows LIFO behavior and could use a stack to recall the most recently visited previous browser page. The page could be stored at the top of the stack and called quickly then removed with pop() after navigating back.
+
+## Scenario D: Depth-First Search
+### Exploring the most recently discovered path before returning to earlier alternatives follows LIFO behavior which is appropriate for a stack. For example, if you had File A, which had subfiles B and C, and you wanted to perform a DFS, you'd want to search C, then B, then A. A stack would perform correctly here because C would be placed on the stack last and after it was searched could be removed, then B, then A.
+
+## Scenario E: Customer Service Line
+### A customer service line exhibits FIFO behavior and wouldn't be appropriate for a stack. A queue would be more appropriate (which makes sense because it's synonymous with "line"). With a customer service line, you'd generally want to service customers in the order they arrived. A stack would keep servicing the most recent arrival. 
+
 
 
 
