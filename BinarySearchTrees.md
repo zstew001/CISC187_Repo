@@ -399,6 +399,69 @@ int main() {
 ### 4. If the value already exists, it isn't inserted again. Neither the < nor > comparison will be true, so the function just returns the existing node.
 
 ## Part 6 Analysis: 
+### Search is ```O(H)``` (H = Height) because it only follows one tree path, so the number of nodes examined depends on tree height. For a balanced tree, the height is approximately ```log N```, so search would be ```O(log N)```. If the tree is skewed in one direction, its height could be closer to N, resulting in a search of ```O(N)``` time-complexity.
+
+## Part 7 Analysis:
+### Inorder traversal produces values in sorted order because it checks the left subtree before the current node, then checks the right subtree. Since values in the left subtree are < node and values in the right subtree are >, the values are printed from smallest to largest. The actual output was the same as the predicted output.
+
+## Part 8 Analysis:
+### 1. The minimum value is ```20``` and is found by following ```left``` because every node to the left has a smaller value. Once there aren't any more left children, the smallest value has been reached.
+### 2. The maximum value is ```80``` and is found by following ```right``` since the larger values are stored there. Once there aren't any more right children, the largest value has been reached.
+### 3. If the tree is empty, the functions shouldn't return an actual value. I used ```underflow_error``` for this case because returning a number like ```-1``` could be confused for a value that is actually stored in the tree.
+### 4. Both operations are ```O(H)``` because they follow one path through the tree, instead of checking each node individually.
+
+## Part 9 Analysis:
+### Deleting a node with two children requires more work because both subtrees need to remain connected. Unlike a leaf, a replacement value must be found before removing the original node. If we simply delete a node without reconnecting the child nodes, those nodes could no longer be reachable and the tree wouldn't function properly.
+
+## Part 10 Analysis:
+### Inorder traversal is a useful correctness check after deletion because the values should still be sorted even when the nodes have been changed. However, sorted inorder output alone isn't enough to prove the complete implementation is correct because it doesn't check all the other operations. You must also check that the deleted values aren't found anymore and that the remaining values can still be searched for.
+
+## Part 11 Analysis:
+### Both trees contain the same values, but their heights are different because the insertion order changes how nodes are connected. In Tree A, values are split between the left and right subtrees, so searching for 70 only examines 3 nodes. In Tree B, every new value is > than the previous value, so all the nodes end up on the right side. This causes the tree to function similarly to a linked list by examining all 7 nodes in order to find 70.
+
+## Part 12 Analysis:
+```
+| Operation | Balanced BST | Highly Skewed BST | Why? |
+| --- | --- | --- | --- |
+| Search | O(log N) | O(N) | Search follows a single path through the tree. |
+| Insert | O(log N) | O(N) | Insert follows a single path until finding an empty position. |
+| Delete | O(log N) | O(N) | A node must be found before it can be removed. |
+| Minimum | O(log N) | O(N) | Follows left until no children remain in left side of tree. |
+| Maximum | O(log N) | O(N) | Follows right until no children remain in right side of tree. |
+| Full inorder traversal | O(N) | O(N) | Must visit every node. |
+```
+### Saying BST search is ```O(log N)``` is incomplete or potentially incorrect because it assumes a tree is balanced. This implementation doesn't balance itself, so the tree height depends on insertion order. Search is more accurately represented as O(H) because it follows one path, and that height is close to ```log N``` or ```N```. The minimum and maximum operations might take less time depending on which direction a skewed tree follows.
+
+## Part 13 Analysis:
+### 1. The values returned are ```40, 50, 60, 70``` because these are the only values that fall within the range of ```35``` through ```70```.
+### 2. The branches containing ```20``` and ```80``` can be ignored because those values are outside of the search range.
+### 3. The BST ordering property allows us to ignore certain branches because all values to the left of a node are smaller, while all values to the right are larger. For example, since ```30``` is < ```35```, we can ignore its left subtree because none of those values could fall within the search range.
+
+
+## Part 14 Analysis: 
+### 1. Children should be deleted before their parent because deleting the parent first could result in losing access to the pointers for its children.
+### 2. Traversal  naturally supports this ordering because it examines the left subtree, then the right subtree before examining the current node.
+### 3. If the dynamically allocated nodes were never released, the program would have memory leaks because the memory allocated to those nodes wouldn't be released when the tree is destroyed.
+### 4. The maximum recursion depth depends on how far down the tree the function needs to go, so it is determined by tree height. A balanced tree would use about ```O(log N)``` recursive calls, while a skewed tree could require ```O(N)``` calls.
+
+## Part 15: BST Test - Below is a screenshot of program output containing all specified test-cases:
+<img width="1280" height="501" alt="Screenshot 2026-10-18 191944" src="https://github.com/user-attachments/assets/46f0440f-3106-4563-b357-101767fab40f" />
+
+## Analysis and Reflection: 
+### 1. The BST invariant applies to the entire subtree, not just a node and its immediate children. In this program, ```20``` and ```40``` are both in the left subtree of ```50```, so they both have to be < ```50``` even though neither is a direct child.
+### 2. Insertion order affects the tree's shape because each value is inserted based on the nodes that are already present. The program starts with ```50, 30, 70``` which places nodes on each side of the root, while inserting the same values in sorted order might create a skewed tree.
+### 3. Search follows only one path because comparing the target to the current node determines which direction the program will follow. When I searched for ```75```, the function followed ```50 -> 70 -> 80``` and returned ```false``` after reaching ```nullptr``` to the left of ```80```.
+### 4. Inorder traversal produces sorted output because it visits the left subtree, then the current node, and then the right subtree. The initial inorder output was ```20 30 40 50 60 70 80```, and the values are still sorted after deletion.
+### 5. Deletion is more complicated than insertion because removing a node can require reconnecting the child nodes. When I removed ```20``` it could just be deleted, but removing ```30``` requires reconnecting ```40``` and removing ```50``` requires replacing it with the inorder successor ```60```.
+### 6. BST performance depends on height because search, insertion, and deletion have to follow the tree paths. The initial tree has a height of ```2``` and searching for ```20``` only requires checking ```50, 30, 20```, while a larget tree would likely require more comparisons.
+### 7. A skewed BST can behave like a linked list because each node can end up having only one child. In Part 11, inserting ```10, 20, 30, 40, 50, 60, 70``` forces a chain of children on the right side of the tree, so searching for ```70``` requires checking all seven tree nodes.
+### 8. Self-balancing trees like AVL and Red-Black trees are useful because they prevent the tree from becoming overly skewed. In this case, the BST doesn't rebalance itself, so insertion order can increase height and make search slower, while self-balancing trees ensure height is ```O(log N)```.
+
+
+
+
+
+
 
 
 
