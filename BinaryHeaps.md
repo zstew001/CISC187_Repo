@@ -219,7 +219,7 @@ void MaxHeap::display() const {
 int main() {
     MaxHeap myHeap;
 
-    cout << "Heap empty: " << (myHeap.empty() ? "Yes" : "No") << endl <<;
+    cout << "Heap empty: " << (myHeap.empty() ? "Yes" : "No") << endl;
     cout << "Remove from empty heap: " << (myHeap.removeMax() ? "Success" : "Failed") << endl;
 
     myHeap.insert(45);
@@ -363,9 +363,8 @@ Task E (10): [10, 9, 2, 4, 7]
 ### 5. Task B would be processed next because it has the next highest priority ```9```.
 ### 6. A heap is suitable for this type of application because it ensures that the task with the highest priority can be accessed immediately without sorting through the entire tree.
 
-
-
- 
+## Analysis and Reflection:
+### A heap must be complete because each level needs to be filled from left to right without any gaps. Unlike a Binary Search Tree, a max-heap only requires that each parent is >= its children. This makes searching for an arbitrary value inefficient because there isn't a way to determine which subtree contains the value. However, the maximum value is always stored at index 0, allowing it to be accessed immediately without searching through the heap. Insertion starts at the end of the array to maintain completeness, while deletion replaces the root with the last node. When inserting or removing a value, it may need to move up or down through the tree to restore the heap condition. Trickle-down selects the larger child because swapping with the smaller child can and may still violate the heap condition. Insertion and removal are both O(log N) because the values only need to move through one path of the tree rather than checking every node. The heap's weak ordering isn't really a disadvantage for priority queues because there isn't a need to keep every value sorted. Since the highest-priority value can be accessed immediately, the heap can still handle insertion and removal efficiently.
 
 
 
