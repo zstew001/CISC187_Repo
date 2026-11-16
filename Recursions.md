@@ -60,5 +60,16 @@ int main() {
 ```
 
 # Part 3: Trace the Countdown
+| Step | Function Call | Value Printed | Next Action |
+| :--- | :--- | :--- | :--- |
+| 1 | `countdown(3)` | 3 | Call `countdown(2)` |
+| 2 | `countdown(2)` | 2 | Call `countdown(1)` |
+| 3 | `countdown(1)` | 1 | Call `countdown(0)` |
+| 4 | `countdown(0)` | 0 | Return; the previous calls finish |
+
+### The base case prevents negative numbers because when ```number``` reaches 0, the function prints 0 and returns. This prevents any additional recursive calls from ```number - 1```, this allows the countdown to stop at 0 instead of continuing into negative numbers. 
+
+# Part 4: Reading Recursive Code: Factorial
+
 
 
